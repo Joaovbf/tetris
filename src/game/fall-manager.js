@@ -12,6 +12,6 @@ export default {
   },
   calculateFrameCountToFall() {
     const gameState = useStateStore()
-    gameState.state.frameCountToFall = gameState.state.frameCountToFall * 0.85
+    gameState.state.frameCountToFall = gameState.state.frameCountToFall * 0.9
   }
 }
