@@ -101,8 +101,9 @@ export default {
           gameState.state.lineCount += lineCount
           fieldManager.clearLines()
 
-          if (gameState.state.level !== 1 + Math.floor(gameState.state.lineCount / 10)) {
-            gameState.state.level = 1 + Math.floor(gameState.state.lineCount / 10)
+          const calculatedLevel = scoreManager.levelByCompletedLines(gameState.state.lineCount)
+          if (gameState.state.level !== calculatedLevel) {
+            gameState.state.level = calculatedLevel
             fallManager.calculateFrameCountToFall()
           }
         }
