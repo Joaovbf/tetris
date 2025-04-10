@@ -8,5 +8,13 @@ export default {
     }
 
     return pointsPerLine[lines] * level
+  },
+  levelByCompletedLines(completedLines) {
+    console.log(completedLines)
+    if (completedLines > 100) {
+      return 10 + Math.floor(completedLines / 100)
+    }
+
+    return 1 + Math.floor(completedLines / 10)
   }
 }
