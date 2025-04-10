@@ -34,5 +34,6 @@ export default Object.freeze({
   isFastDropOn: false,
   fallTimer: 0,
   frameCountToFall: 48,
-  lineCount: 0
+  lineCount: 0,
+  blocksCount: {}
 })
