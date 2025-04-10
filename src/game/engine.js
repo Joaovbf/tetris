@@ -23,6 +23,7 @@ export default {
 
     gameState.state = {...initialState}
     gameState.state.field.map((row) => row.fill(false))
+    gameState.state.blocksCount = {}
     this.startGame()
   },
 
