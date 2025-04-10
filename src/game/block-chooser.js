@@ -24,7 +24,6 @@ export default {
       const adjustedWeight = this.defaultWeight * Math.pow(this.decay, count);
       return { constructor: item, adjustedWeight };
     });
-    console.log(weightedBlocks)
 
     const totalWeight = weightedBlocks.reduce((sum, item) => sum + item.adjustedWeight, 0);
     const rand = Math.random() * totalWeight;
