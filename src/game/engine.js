@@ -48,6 +48,7 @@ export default {
     gameState.state.nextBlock = blockChooser.nextBlock()
     gameState.state.isGameRunning = true
     gameState.state.isGameStarted = true
+    blockChooser.initBlockCounter()
     this.idGameLoop = setInterval((gameState) => this.gameLoop(gameState), this.frameTime, gameState)
     this.idTimerLoop = setInterval((gameState) => gameState.state.time++, 1000, gameState)
   },

@@ -13,15 +13,15 @@ export default {
   blocks: [
     IBlock, JBlock, LBlock, OBlock, SBlock, TBlock, ZBlock
   ],
-  decay: 0.8,
-  defaultWeight: 100,
+  decay: 0.85,//higher decay means shorter adjusted weight, value needs to be between 1 and 0 todo: corrigir isso
+  defaultWeight: 20,//higher default weight means higher influence of decay
   nextBlock() {
     const gameState = useStateStore()
     let blockClass = null;
 
     const weightedBlocks = this.blocks.map(item => {
       const count = gameState.state.blocksCount[item.name] || 0;
-      const adjustedWeight = this.defaultWeight * Math.pow(this.decay, count);
+      const adjustedWeight = this.defaultWeight * Math.pow(this.decay, count); //every time that a block is selected the weight decreases exponentially
       return { constructor: item, adjustedWeight };
     });
 
@@ -41,14 +41,29 @@ export default {
       throw "Bloco não selecionado"
     }
 
-    const directionsValues = Object.values(EnumDirections)
-    const direction = directionsValues[Math.floor(Math.random() * directionsValues.length)]
-    if (gameState.state.blocksCount[blockClass.name]) {
-      gameState.state.blocksCount[blockClass.name]++
-    } else {
-      gameState.state.blocksCount[blockClass.name] = 1
+    for (const blockCountKey in gameState.state.blocksCount) {
+      if (blockCountKey === blockClass.name) {
+        continue;
+      }
+      gameState.state.blocksCount[blockCountKey]--
     }
 
+    const directionsValues = Object.values(EnumDirections)
+    const direction = directionsValues[Math.floor(Math.random() * directionsValues.length)]
+    gameState.state.blocksCount[blockClass.name] += this.blocks.length
+    if (gameState.state.blocksCountDebug[blockClass.name]) {
+      gameState.state.blocksCountDebug[blockClass.name]++
+    } else {
+      gameState.state.blocksCountDebug[blockClass.name] = 1
+    }
+    console.log(gameState.state.blocksCount, weightedBlocks)
+
     return new blockClass(new Direction(direction))
+  },
+  initBlockCounter() {
+    const gameState = useStateStore()
+    for (const block of this.blocks) {
+      gameState.state.blocksCount[block.name] = 0
+    }
   }
 }
